@@ -1,0 +1,105 @@
+<!-- Title -->
+<h1 class="mt-4 mb-4 fs-2">REGISTRO</h1>
+
+<form [formGroup]="myForm" (ngSubmit)="register()">
+
+  <div class="row">
+    <!-- Name -->
+    <div class="col-12 col-md-6 mb-3">
+      <input formControlName="name" type="text" class="form-control rounded-pill shadow-sm border-0 custom-input"
+        placeholder="Nombre" />
+      <span class="form-text text-danger float-start" *ngIf="valid_field('name')">
+        * Introduce tu nombre.
+      </span>
+    </div>
+
+    <!-- Lastame -->
+    <div class="col-12 col-md-6 mb-3">
+      <input formControlName="lastname" type="text" class="form-control rounded-pill shadow-sm border-0 custom-input"
+        placeholder="Apellido" />
+      <span class="form-text text-danger float-start" *ngIf="valid_field('lastname')">
+        * Introduce tu apellido.
+      </span>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- Phone -->
+    <div class="col-12 col-md-6 mb-3">
+      <ngx-intl-tel-input [cssClass]="'custom'" [enableAutoCountrySelect]="true" [enablePlaceholder]="true"
+        [searchCountryFlag]="true" [preferredCountries]="[CountryISO.Ecuador]" [searchCountryField]="[
+            SearchCountryField.Iso2,
+            SearchCountryField.Name
+          ]" searchCountryPlaceholder="Buscar país" customPlaceholder="Teléfono"
+        [selectedCountryISO]="CountryISO.Ecuador" [maxLength]="15" [phoneValidation]="true" [separateDialCode]="true"
+        [numberFormat]="PhoneNumberFormat.National" name="phone" formControlName="phone">
+      </ngx-intl-tel-input>
+      <div *ngIf="phone?.invalid && phone?.touched">
+        <span class="form-text text-danger float-start" *ngIf="phone?.invalid">
+          * Por favor ingresa un número de teléfono válido.
+        </span>
+      </div>
+    </div>
+
+    <!-- Email -->
+    <div class="col-12 col-md-6 mb-3">
+      <input formControlName="email" type="email" class="form-control rounded-pill shadow-sm border-0 custom-input"
+        placeholder="Correo electrónico" />
+      <div *ngIf="(email?.invalid && email?.touched) || email?.dirty">
+        <span class="form-text text-danger float-start" *ngIf="email?.errors?.['required']">
+          * Introduce un correo electrónico.
+        </span>
+        <span class="form-text text-danger float-start" *ngIf="email?.errors?.['pattern']">
+          * Por favor ingresa una dirección de correo electrónico válida.
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- Ultimatix -->
+    <div class="col-12 col-md-6 mb-3">
+      <input formControlName="ultimatix" type="text" class="form-control rounded-pill shadow-sm border-0 custom-input"
+        placeholder="Ultimatix" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" />
+      <div *ngIf="(ultimatix?.invalid && ultimatix?.touched) || ultimatix?.dirty">
+        <span class="form-text text-danger float-start" *ngIf="ultimatix?.errors?.['required']">
+          * Introduce tu número de ultimatix.
+        </span>
+        <span class="form-text text-danger float-start" *ngIf="ultimatix?.errors?.['minlength']">
+          * Introduce un número de ultimatix válido.
+        </span>
+      </div>
+    </div>
+
+    <!-- Password -->
+    <div class="col-12 col-md-6 mb-3">
+      <div class="input-group">
+        <input formControlName="password" type="password"
+          class="form-control rounded-pill shadow-sm border-0 custom-input" placeholder="Contraseña" />
+      </div>
+      <div *ngIf="(password?.invalid && password?.touched) || password?.dirty">
+        <span class="form-text text-danger float-start" *ngIf="password?.errors?.['required']">
+          * Introduce una contraseña.
+        </span>
+        <span class="form-text text-danger float-start" *ngIf="password?.errors?.['pattern']">
+          * La contraseña debe tener por lo menos 8 caracteres, una letra minúscula, una letra mayúscula, un número y un
+          caracter especial (.,/$@). Ejemplo: Tcs.@2022.
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Register -->
+  <div class="mb-3 mt-1">
+    <button type="submit" class="btn rounded-pill w-50 custom-btn">
+      Registrar
+    </button>
+  </div>
+
+  <!-- Login -->
+  <span>
+    ¿Ya tienes una cuenta?
+    <a [routerLink]="['/auth/login']" class="custom-link"><strong>Inicia sesión</strong></a>
+  </span>
+
+</form>
